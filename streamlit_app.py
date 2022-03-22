@@ -17,10 +17,13 @@ if uf is not None:
     #px=open(os.path.basename(uf.name),"wb")
     px.write(bd)
     px.close()
-    #os.system(f"soffice --headless  --convert-to pdf --outdir {outdir} {px.name}")
-    os.system(f"env -i bash -c \"/usr/bin/unoconv {px.name}\"")
+
     pdf_name=px.name.replace(".pptx",".pdf")
     png_name=px.name.replace(".pptx",".png")
+
+    #os.system(f"soffice --headless  --convert-to pdf --outdir {outdir} {px.name}")
+    os.system(f"env -i bash -c \"/usr/bin/unoconv {px.name} -o {pdf_name}\"")
+
     os.system(f"convert -geometry 680x -depth 8 {pdf_name} {png_name}")
     image = Image.open(png_name)
     
