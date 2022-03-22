@@ -1,2 +1,4 @@
 unoconv
 imagemagick
+openjdk-17-jdk-headless
+libreoffice-java-common
