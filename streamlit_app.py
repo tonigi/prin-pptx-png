@@ -12,7 +12,7 @@ uf=st.file_uploader("Upload a PPTX file. For now 1st slide only, sorry.",
 if uf is not None:
     bd=uf.getvalue()
     #px=tempfile.NamedTemporaryFile(delete=False)
-    outdir = "/tmp"
+    outdir = "/tmp/"
     px=open(outdir+os.path.basename(uf.name),"wb")
     #px=open(os.path.basename(uf.name),"wb")
     px.write(bd)
