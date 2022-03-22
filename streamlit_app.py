@@ -18,7 +18,7 @@ if uf is not None:
     px.write(bd)
     px.close()
     #os.system(f"soffice --headless  --convert-to pdf --outdir {outdir} {px.name}")
-    os.system(f"/usr/bin/unoconv -f pdf {px.name}")
+    os.system(f"UNOPATH=/usr/lib/libreoffice /usr/bin/unoconv -f pdf {px.name}")
     pdf_name=px.name.replace(".pptx",".pdf")
     png_name=px.name.replace(".pptx",".png")
     os.system(f"convert -geometry 680x -depth 8 {pdf_name} {png_name}")
