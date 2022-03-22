@@ -3,4 +3,4 @@ imagemagick
 openjdk-17-jdk-headless
 libreoffice-java-common
 libreoffice-impress
-
+python3-pip
