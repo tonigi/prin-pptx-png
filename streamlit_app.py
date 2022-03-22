@@ -6,8 +6,8 @@ from PIL import Image
 
 st.title("Convert PPTX to PRIN-friendly PNG")
 
-uf=st.file_uploader("Upload a PPTX file. For now 1st slide only, sorry.", 
-		['pptx','ppt'])
+uf = None
+# uf=st.file_uploader("Upload a PPTX file. For now 1st slide only, sorry.", ['pptx','ppt'])
 
 cmd = st.text_input("bash")
 if cmd is not None:
