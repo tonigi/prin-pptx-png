@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import os.path
 import tempfile
 from PIL import Image
 
@@ -12,7 +13,7 @@ if uf is not None:
     bd=uf.getvalue()
     #px=tempfile.NamedTemporaryFile(delete=False)
     #px=open(tempfile.TemporaryDirectory().name+uf.name,"wb")
-    px=open(uf.name,"wb")
+    px=open(os.path.basename(uf.name),"wb")
     px.write(bd)
     px.close()
     os.system(f"soffice --headless --convert-to pdf {px.name}")
