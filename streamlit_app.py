@@ -1,38 +1,29 @@
-from collections import namedtuple
-import altair as alt
-import math
-import pandas as pd
 import streamlit as st
+import os
+import tempfile
+from PIL import Image
 
-"""
-# Welcome to Streamlit!
+st.title("Convert PPTX to PRIN-friendly PNG")
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:
+uf=st.file_uploader("Upload a PPTX file. For now 1st slide only, sorry.", 
+		['pptx','ppt'])
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+if uf is not None:
+    bd=uf.getvalue()
+    #px=tempfile.NamedTemporaryFile(delete=False)
+    #px=open(tempfile.TemporaryDirectory().name+uf.name,"wb")
+    px=open(uf.name,"wb")
+    px.write(bd)
+    px.close()
+    os.system(f"soffice --headless --convert-to pdf {px.name}")
+    pdf_name=px.name.replace(".pptx",".pdf")
+    png_name=px.name.replace(".pptx",".png")
+    os.system(f"convert -geometry 680x -depth 8 {pdf_name} {png_name}")
+    image = Image.open(png_name)
+    
+    st.subheader("Converted image")
+    st.image(image)
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
-
-
-with st.echo(code_location='below'):
-    total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-    num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
-
-    Point = namedtuple('Point', 'x y')
-    data = []
-
-    points_per_turn = total_points / num_turns
-
-    for curr_point_num in range(total_points):
-        curr_turn, i = divmod(curr_point_num, points_per_turn)
-        angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-        radius = curr_point_num / total_points
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
-        data.append(Point(x, y))
-
-    st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-        .mark_circle(color='#0068c9', opacity=0.5)
-        .encode(x='x:Q', y='y:Q'))
+    png_data=open(png_name,"rb").read()
+    st.download_button("Download the image here", png_data, png_name)
+    
