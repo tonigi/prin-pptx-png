@@ -28,7 +28,9 @@ if uf is not None:
     #os.system(f"soffice --headless  --convert-to pdf --outdir {outdir} {px.name}")
     os.system(f"env -i bash -c \"/usr/bin/unoconv {px.name}\"")
 
-    os.system(f"convert -geometry 680x -depth 8 {pdf_name} {png_name}")
+    #os.system(f"convert -geometry 680x -depth 8 {pdf_name} {png_name}")
+    os.system("gs -dSAFER -r600 -sDEVICE=pngalpha -o {png_name} {pdf_name}")
+    
     image = Image.open(png_name)
     
     st.subheader("Converted image")
