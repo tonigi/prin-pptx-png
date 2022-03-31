@@ -7,7 +7,7 @@ from PIL import Image
 st.title("Convert PPTX to PRIN-friendly PNG")
 
 uf = None
-# uf=st.file_uploader("Upload a PPTX file. For now 1st slide only, sorry.", ['pptx','ppt'])
+uf = st.file_uploader("Upload a PPTX file. For now 1st slide only, sorry.", ['pptx','ppt'])
 
 cmd = st.text_input("bash")
 if cmd is not None:
@@ -26,7 +26,7 @@ if uf is not None:
     png_name=px.name.replace(".pptx",".png")
 
     #os.system(f"soffice --headless  --convert-to pdf --outdir {outdir} {px.name}")
-    os.system(f"env -i bash -c \"/usr/bin/unoconv {px.name} -o {pdf_name}\"")
+    os.system(f"env -i bash -c \"/usr/bin/unoconv {px.name}\"")
 
     os.system(f"convert -geometry 680x -depth 8 {pdf_name} {png_name}")
     image = Image.open(png_name)
